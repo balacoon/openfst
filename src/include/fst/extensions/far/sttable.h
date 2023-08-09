@@ -30,6 +30,7 @@
 
 #include <fstream>
 #include <fst/util.h>
+#include <string_view>
 
 namespace fst {
 
@@ -165,7 +166,7 @@ class STTableReader {
     MakeHeap();
   }
 
-  bool Find(const std::string &key) {
+  bool Find(std::string_view key) {
     if (error_) return false;
     for (size_t i = 0; i < streams_.size(); ++i) LowerBound(i, key);
     MakeHeap();
@@ -256,7 +257,7 @@ class STTableReader {
 
   // Positions the stream at the position corresponding to the lower bound for
   // the specified key.
-  void LowerBound(size_t id, const std::string &find_key) {
+  void LowerBound(size_t id, std::string_view find_key) {
     auto *strm = streams_[id];
     const auto &positions = positions_[id];
     if (positions.empty()) return;
